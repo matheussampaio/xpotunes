@@ -1,0 +1,16 @@
+/************************************
+ *
+ *  Main Styles to compile. Here only @imports!
+ *
+ ************************************/
+
+/**
+ * INJECTED COMPONENTS SCSS
+ */
+
+//- inject:scss
+//- endinject
+
+@import "_variables.scss";
+@import "_grid.scss";
+@import "node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";

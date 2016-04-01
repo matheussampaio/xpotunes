@@ -1,6 +1,6 @@
 {
   "name": "xpotunes",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "postinstall": "gulp build",
@@ -26,10 +26,6 @@
     "ng-storage": "0.3.2",
     "node-restful": "0.2.5",
     "stream-buffers": "3.0.0"
-  },
-  "engines": {
-    "node": "5.1.0",
-    "npm": "3.5.0"
   },
   "devDependencies": {
     "babel-core": "6.7.2",

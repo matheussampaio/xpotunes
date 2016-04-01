@@ -1,7 +1,8 @@
 import Busboy from 'busboy';
 import restful from 'node-restful';
+import AudioData from './audio-data';
 
-const inspect = require('util').inspect;
+const mongoose = restful.mongoose;
 
 const Music = restful.model('music', new restful.mongoose.Schema({
   title: {
@@ -9,37 +10,65 @@ const Music = restful.model('music', new restful.mongoose.Schema({
     trim: true,
     required: true
   },
+  size: {
+    type: Number,
+    required: true
+  },
   file: {
-    type: Buffer
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'audiodata',
+    required: true
   }
 }))
 .methods(['get', 'put', 'delete']);
 
 Music.route('post', (req, res) => {
-  const busboy = new Busboy({ headers: req.headers });
+  console.log('teste');
+
+  const busboy = new Busboy({
+    headers: req.headers,
+    limits: {
+      fileSize: 15 * 1024 * 1024 // 15mb
+    }
+  });
+
   const music = new Music();
+
+  const fileBuffer = [];
 
   busboy.on('file', (fieldname, file) => {
     file.on('data', data => {
-      music.file += data;
+      console.log(data);
+      fileBuffer.push(data);
     });
 
     file.on('end', () => {
-      // console.log('end event');
-      // console.log('File [' + fieldname + '] Finished');
     });
 
   });
 
   busboy.on('finish', () => {
-    music.save((err) => {
+    const musicdata = new AudioData();
+
+    musicdata.file = Buffer.concat(fileBuffer);
+
+    musicdata.save((err) => {
       if (err) {
-        res.status(404).send(err);
+        res.status(400).send(err);
       } else {
-        res.writeHead(200, { Connection: 'close' });
-        res.end("That's all folks!");
+        music.file = musicdata._id;
+
+        music.save((err2) => {
+          if (err2) {
+            res.status(400).send(err2);
+          } else {
+            res.writeHead(200, { Connection: 'close' });
+            res.end();
+          }
+        });
       }
     });
+
   });
 
   busboy.on('field', (fieldname, val) => {

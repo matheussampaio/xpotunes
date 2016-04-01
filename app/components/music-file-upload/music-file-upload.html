@@ -62,8 +62,11 @@
         </button>
       </div>
 
-        <input accept="image/*" type="file" nv-file-select="" uploader="$ctrl.uploader" />
+        <input accept="audio/*" type="file" nv-file-select="" uploader="$ctrl.uploader" />
 
+        <audio controls>
+          <source src="http://localhost:3000/api/audiodata/56fdf4812c675071add78e42/stream">
+        </audio>
     </div>
   </div>
 </div>

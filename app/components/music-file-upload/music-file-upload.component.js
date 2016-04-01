@@ -17,7 +17,8 @@
       },
       onBeforeUploadItem: (item) => {
         item.formData.push({
-          title: 'teste-form'
+          title: 'teste-form',
+          size: item.file.size
         });
 
         console.log(item);

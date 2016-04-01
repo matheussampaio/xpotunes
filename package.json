@@ -12,7 +12,7 @@
     "angular-resource": "1.5.1",
     "angular-ui-router": "0.2.18",
     "body-parser": "1.15.0",
-    "bootstrap": "3.3.6",
+    "bootstrap-sass": "3.3.6",
     "busboy": "0.2.12",
     "errorhandler": "1.4.3",
     "express": "4.13.4",

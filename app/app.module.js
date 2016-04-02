@@ -3,8 +3,10 @@
 
   angular.module('xpotunes', [
     'ui.router',
-    'ngResource',
-    'ngStorage',
+
+    'ngMaterial',
+    'firebase',
+
     'Lodash',
 
     'angularFileUpload'

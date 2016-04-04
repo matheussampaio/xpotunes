@@ -7,8 +7,11 @@
       templateUrl: 'home/home.html'
     });
 
-  function homeController() {
-    console.log('home');
+  function homeController(MusicService, UserService) {
+    const vm = this;
+
+    vm.user = UserService;
+    vm.musics = MusicService.getMusics();
   }
 
 })();

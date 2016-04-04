@@ -1,8 +1,15 @@
 import restful from 'node-restful';
 
+const mongoose = restful.mongoose;
+
 const AudioData = restful.model('audiodata', new restful.mongoose.Schema({
   file: {
     type: Buffer,
+    required: true
+  },
+  music: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'music',
     required: true
   }
 }))

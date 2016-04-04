@@ -1,3 +1,16 @@
-<audio controls>
-  <source src="http://localhost:3000/api/audiodata/56fdf4812c675071add78e42/stream">
-</audio>
+<div ng-if="$ctrl.user.data">
+  <div>
+    <ul>
+      <li ng-repeat="music in $ctrl.musics">
+        <pre ng-bind="music | json"></pre>
+      </li>
+    </ul>
+  </div>
+
+  <music-file-upload></music-file-upload>
+</div>
+<div ng-if="!$ctrl.user.data">
+  <div layout="row"  layout-align="center center" layout-wrap layout-margin layout-padding>
+    <h2>xpo tunes</h2>
+  </div>
+</div>

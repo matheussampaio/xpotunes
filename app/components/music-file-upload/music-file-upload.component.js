@@ -7,7 +7,7 @@
       templateUrl: 'music-file-upload/music-file-upload.html'
     });
 
-  function musicFileUploadController(FileUploader) {
+  function musicFileUploadController($mdToast, FileUploader, UserService, MusicService) {
     const vm = this;
 
     vm.uploader = new FileUploader({
@@ -17,7 +17,8 @@
       },
       onBeforeUploadItem: (item) => {
         item.formData.push({
-          title: 'teste-form',
+          title: item.file.name,
+          user: UserService.data.uid,
           size: item.file.size
         });
 
@@ -25,6 +26,12 @@
       },
       onSuccessItem: (fileItem, response, status, headers) => {
         console.info('onSuccessItem', fileItem, response, status, headers);
+        if (status === 200) {
+          MusicService.addMusic(response);
+          $mdToast.show($mdToast.simple().textContent('Audio Added!'));
+        } else {
+          $mdToast.show($mdToast.simple().textContent('Error addind music.'));
+        }
       },
       onErrorItem: (fileItem, response, status, headers) => {
         console.error('error: ', response);

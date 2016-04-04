@@ -14,6 +14,10 @@ const Music = restful.model('music', new restful.mongoose.Schema({
     type: Number,
     required: true
   },
+  user: {
+    type: String,
+    required: true
+  },
   file: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'audiodata',
@@ -23,8 +27,6 @@ const Music = restful.model('music', new restful.mongoose.Schema({
 .methods(['get', 'put', 'delete']);
 
 Music.route('post', (req, res) => {
-  console.log('teste');
-
   const busboy = new Busboy({
     headers: req.headers,
     limits: {
@@ -38,7 +40,6 @@ Music.route('post', (req, res) => {
 
   busboy.on('file', (fieldname, file) => {
     file.on('data', data => {
-      console.log(data);
       fileBuffer.push(data);
     });
 
@@ -50,6 +51,7 @@ Music.route('post', (req, res) => {
   busboy.on('finish', () => {
     const musicdata = new AudioData();
 
+    musicdata.music = music._id;
     musicdata.file = Buffer.concat(fileBuffer);
 
     musicdata.save((err) => {
@@ -58,12 +60,15 @@ Music.route('post', (req, res) => {
       } else {
         music.file = musicdata._id;
 
-        music.save((err2) => {
+        music.save((err2, result) => {
           if (err2) {
             res.status(400).send(err2);
           } else {
-            res.writeHead(200, { Connection: 'close' });
-            res.end();
+            res.set({
+              'Content-Type': 'application/json',
+              Connection: 'close'
+            });
+            res.status(200).json(result);
           }
         });
       }

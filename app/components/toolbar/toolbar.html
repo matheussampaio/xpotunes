@@ -9,7 +9,7 @@
     <md-button
       ui-sref-active="active"
       ui-sref="app.login"
-      ng-hide="$ctrl.$rootScope.user" >
+      ng-hide="$ctrl.user.data" >
         Login
     </md-button>
 
@@ -17,22 +17,14 @@
     <md-button
       ui-sref-active="active"
       ui-sref="app.register"
-      ng-hide="$ctrl.$rootScope.user">
+      ng-hide="$ctrl.user.data">
         Register
-    </md-button>
-
-    <!-- Settings -->
-    <md-button
-      ui-sref-active="active"
-      ui-sref="app.settings"
-      ng-show="$ctrl.$rootScope.user">
-        Settings
     </md-button>
 
     <!-- Logout -->
     <md-button
       ng-click="$ctrl.logout()"
-      ng-show="$ctrl.$rootScope.user">
+      ng-show="$ctrl.user.data">
         Logout
     </md-button>
 

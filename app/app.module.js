@@ -3,7 +3,7 @@
 
   angular.module('xpotunes', [
     'ui.router',
-
+    'ngResource',
     'ngMaterial',
     'firebase',
 

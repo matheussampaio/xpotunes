@@ -1,6 +1,6 @@
-import Busboy from 'busboy';
-import restful from 'node-restful';
-import AudioData from './audio-data';
+const Busboy = require('busboy');
+const restful = require('node-restful');
+const AudioData = require('./audio-data');
 
 const mongoose = restful.mongoose;
 

@@ -67,8 +67,10 @@ app.all('/*', index.index);
 /**
  * Start Server
  */
-http.createServer(app).listen(app.get('port'), () => {
+const server = http.createServer(app).listen(app.get('port'), () => {
   const port = app.get('port');
 
   console.log(`Express server listening on port ${port}`);
 });
+
+module.exports = server;

@@ -1,3 +1,5 @@
+require('babel-core/register');
+
 const del = require('del');
 const path = require('path');
 const gulp = require('gulp');
@@ -77,14 +79,14 @@ gulp.task('build:js', () => {
     }))
     .pipe(plugins.ngAnnotate())
     .pipe(gulp.dest('www/app'))
-    .pipe(browserSync.stream({match: '**/*.js'}));
+    .pipe(browserSync.stream({ match: '**/*.js' }));
 });
 
 gulp.task('build:js:server', () => {
   return gulp.src([
       '**/*.js',
       '!**/*.spec.js',
-      '../server.js'
+      'server.js'
     ], {
       cwd: 'server/'
     })
@@ -164,6 +166,19 @@ gulp.task('build:inject', () => {
     .pipe(_inject(scriptStream, 'app'))
     .pipe(gulp.dest('www/'))
     .pipe(browserSync.stream());
+});
+
+gulp.task('test', () => {
+  return gulp.src('server/**/*.spec.js', { read: false })
+    .pipe(plugins.mocha({
+      reporter: 'spec',
+      compilers: [
+        'js:babel-core/register'
+      ]
+    }))
+    .once('end', () => {
+      process.exit();
+    });
 });
 
 gulp.task('debug', ['build'], () => {

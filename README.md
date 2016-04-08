@@ -1,4 +1,6 @@
-XPO Tunes
+[![Build Status](https://travis-ci.org/matheussampaio/xpotunes-web.svg?branch=master)](https://travis-ci.org/matheussampaio/xpotunes-web)
+
+XPO Tunes Web
 ================
 
 # Requirements:

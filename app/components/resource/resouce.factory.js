@@ -18,6 +18,10 @@
     function musicResource() {
       return $resource(`${DOMAIN}/music/:musicId`, {
         musicId: '@id'
+      }, {
+        update: {
+          method: 'PUT'
+        }
       });
     }
   }

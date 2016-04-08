@@ -1,13 +1,5 @@
 <div ng-if="$ctrl.user.data">
-  <div>
-    <ul>
-      <li ng-repeat="music in $ctrl.musics">
-        <pre ng-bind="music | json"></pre>
-      </li>
-    </ul>
-  </div>
-
-  <music-file-upload></music-file-upload>
+  <dashboard></dashboard>
 </div>
 <div ng-if="!$ctrl.user.data">
   <div layout="row"  layout-align="center center" layout-wrap layout-margin layout-padding>

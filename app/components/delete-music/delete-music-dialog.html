@@ -1,0 +1,15 @@
+<md-dialog delete-dialog>
+  <md-dialog-content class="md-dialog-content">
+    <h2 class="md-title">Delete Music</h2>
+    <p>Type <code>DELETE</code> if you want to delete those musics.</p>
+    <form name="$ctrl.form" ng-submit="$ctrl.deleteMusics()">
+      <md-input-container layout="row">
+        <input name="secret" type="text" ng-model="$ctrl.secret">
+      </md-input-container>
+    </form>
+  </md-dialog-content>
+  <div class="md-actions">
+    <md-button class="md-primary" ng-disabled="!$ctrl.confirmed()" ng-click="$ctrl.deleteMusics()">Delete</md-button>
+    <md-button class="md-primary" ng-click="$ctrl.cancel()">Close</md-button>
+  </div>
+</md-dialog>

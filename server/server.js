@@ -36,11 +36,9 @@ mongoose.connect(uristring, (err) => {
 app.set('port', process.env.PORT || 3000);
 app.use(morgan('dev'));
 app.use(express.static(path.resolve('www')));
+app.use(bodyParser.urlencoded({ extended: 'true' }));
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
 app.use(methodOverride());
 
 const env = process.env.NODE_ENV || 'development';

@@ -6,6 +6,7 @@
     'ngResource',
     'ngMaterial',
     'firebase',
+    'md.data.table',
 
     'Lodash',
 

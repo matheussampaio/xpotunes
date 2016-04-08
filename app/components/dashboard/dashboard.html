@@ -1,0 +1,83 @@
+<md-content layout="column" ng-cloak>
+  <!-- <md-card>
+    <md-card-header>
+      {{$ctrl.user.likes}}
+      {{$ctrl.user.dislikes}}
+    </md-card-header>
+    <md-card-content>
+      {{$ctrl.user.views}}
+    </md-card-content>
+  </md-card> -->
+
+  <md-card ng-show="$ctrl.musics.length">
+    <!-- Default -->
+    <md-toolbar class="md-table-toolbar md-default" ng-hide="$ctrl.selected.length || $ctrl.filter.show">
+      <div class="md-toolbar-tools">
+        <h2 class="md-title">Musics</h2>
+        <div flex></div>
+        <md-button class="md-icon-button" ng-click="$ctrl.filter.show = true">
+          <md-icon>filter_list</md-icon>
+        </md-button>
+
+        <md-button class="md-icon-button" ng-click="$ctrl.addMusic($event)">
+          <md-icon>audiotrack</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <!-- Search -->
+    <md-toolbar class="md-table-toolbar md-default" ng-show="$ctrl.filter.show && !$ctrl.selected.length">
+      <div class="md-toolbar-tools">
+        <md-icon>search</md-icon>
+        <form flex name="$ctrl.filter.form">
+          <input type="text" ng-model="$ctrl.query.filter" placeholder="search">
+        </form>
+        <md-buttom class="md-icon-button" ng-click="$ctrl.removeFilter()">
+          <md-icon>close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <!-- Delete -->
+    <md-toolbar class="md-table-toolbar alternate" ng-show="$ctrl.selected.length">
+      <div class="md-toolbar-tools">
+        <div>{{$ctrl.selected.length}} {{$ctrl.selected.length > 1 ? 'items' : 'item'}} selected</div>
+        <div flex></div>
+        <md-button class="md-icon-button" ng-click="$ctrl.deleteMusic($event)">
+          <md-icon>delete</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-table-container>
+      <table md-table md-row-select multiple ng-model="$ctrl.selected" md-progress="$ctrl.promise">
+        <thead md-head md-order="$ctrl.query.order">
+          <tr md-row>
+            <th md-column md-order-by="title"><span>Title</span></th>
+            <th md-column md-numeric md-order-by="views"><span>Views</span></th>
+            <th md-column md-numeric md-order-by="likes">Likes</th>
+            <th md-column md-numeric md-order-by="dislikes">Dislikes</th>
+          </tr>
+        </thead>
+        <tbody md-body>
+          <tr md-row md-select="music" md-select-id="_id" ng-repeat="music in $ctrl.musics | filter:{title: $ctrl.query.filter} | orderBy: $ctrl.query.order">
+            <td md-cell ng-click="$ctrl.editComment($event, music)">{{music.title}}</td>
+            <td md-cell>{{music.views | number: 0}}</td>
+            <td md-cell>{{music.likes.length | number: 0}}</td>
+            <td md-cell>{{music.dislikes.length | number: 0}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+
+  </md-card>
+
+  <md-card ng-hide="$ctrl.musics.length" layout-align="center center">
+    <md-card-content layout="column" layout-align="center center">
+      <h3>You don't have any music, yet.</h3>
+
+      <md-button class="md-raised md-primary" flex='20' ng-click="$ctrl.addMusic($event)">upload</md-button>
+    </md-card-content>
+  </md-card>
+
+</md-content>

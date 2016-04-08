@@ -18,6 +18,7 @@
 
     function activate() {
       FirebaseService.auth.$onAuth((user) => {
+        $log.debug(user);
         service.data = user;
       });
     }

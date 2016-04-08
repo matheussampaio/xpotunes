@@ -6,28 +6,25 @@
 
   function MusicService(UserService, ResourceFactory) {
     const service = {
-      getMusics,
-      addMusic
+      get,
+      edit,
+      remove
     };
-
-    activate();
 
     return service;
 
     ///////////////////
 
-    function activate() {
-      service.data = ResourceFactory.music.query({
-        user: UserService.data.uid
-      });
+    function get(cb) {
+      return ResourceFactory.music.query({ user: UserService.data.uid }, cb).$promise;
     }
 
-    function getMusics() {
-      return service.data;
+    function remove(id) {
+      return ResourceFactory.music.remove({ musicId: id }).$promise;
     }
 
-    function addMusic(music) {
-      service.data.push(music);
+    function edit(music) {
+      return ResourceFactory.music.update({ musicId: music._id }, music).$promise;
     }
   }
 

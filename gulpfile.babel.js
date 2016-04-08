@@ -85,7 +85,7 @@ gulp.task('build:js', () => {
 gulp.task('build:js:server', () => {
   return gulp.src([
       '**/*.js',
-      '!**/*.spec.js',
+      // '!**/*.spec.js',
       'server.js'
     ], {
       cwd: 'server/'
@@ -168,8 +168,8 @@ gulp.task('build:inject', () => {
     .pipe(browserSync.stream());
 });
 
-gulp.task('test', () => {
-  return gulp.src('server/**/*.spec.js', { read: false })
+gulp.task('test:server', ['build:js:server'], () => {
+  return gulp.src('dist/**/*.spec.js', { read: false })
     .pipe(plugins.mocha({
       reporter: 'spec',
       compilers: [

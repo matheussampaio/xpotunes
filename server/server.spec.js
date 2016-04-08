@@ -1,8 +1,6 @@
-'use strict';
-
 const request = require('supertest');
 
-describe('test the api', () => {
+describe('Server', () => {
   let server;
 
   before(() => {

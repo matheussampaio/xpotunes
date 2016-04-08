@@ -25,6 +25,11 @@
       template: '<home></home>'
     };
 
+    const dashboardState = {
+      url: 'dashboard',
+      template: '<dashboard></dashboard>'
+    };
+
     const loginState = {
       url: 'login',
       template: '<login></login>'
@@ -38,6 +43,7 @@
     $stateProvider
       .state('app', appState)
         .state('app.home', homeState)
+        .state('app.dashboard', dashboardState)
         .state('app.login', loginState)
         .state('app.register', registerState);
 

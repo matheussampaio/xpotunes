@@ -14,7 +14,7 @@
       <div layout="column" class="input-row">
         <md-input-container flex>
           <label>Title</label>
-          <input name="title" ng-model="$ctrl.music.title" md-maxlength="30" required>
+          <input name="title" ng-model="$ctrl.music.title" md-maxlength="30" ng-disabled="$ctrl.uploader.isUploading" required>
         </md-input-container>
 
         <md-input-container flex>
@@ -23,16 +23,20 @@
         </md-input-container>
 
         <label ng-hide="$ctrl.uploader.queue.length" for="input-file" class="md-button md-raised">Select File</label>
-        <label ng-show="$ctrl.uploader.queue.length" for="input-file" class="md-button md-raised">Change File</label>
+        <label ng-show="$ctrl.uploader.queue.length && !$ctrl.uploader.isUploading" for="input-file" class="md-button md-raised">Change File</label>
         <input id="input-file" ng-hide="true" accept="audio/*" type="file" nv-file-select uploader="$ctrl.uploader"/>
       </div>
     </form>
 
   </md-dialog-content>
 
-  <md-dialog-actions>
+  <md-dialog-actions ng-if="!$ctrl.uploader.isUploading">
     <md-button class="md-primary" ng-click="$ctrl.addMusic()" ng-disabled="$ctrl.item.form.$invalid">Upload</md-button>
     <md-button class="md-primary" ng-click="$ctrl.cancel()">Cancel</md-button>
+  </md-dialog-actions>
+
+  <md-dialog-actions ng-if="$ctrl.uploader.isUploading">
+    <md-button class="md-primary" ng-click="$ctrl.cancelUpload()">Cancel Upload</md-button>
   </md-dialog-actions>
 
 </md-dialog>

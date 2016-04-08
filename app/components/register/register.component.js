@@ -7,7 +7,7 @@
       templateUrl: 'register/register.html'
     });
 
-  function registerController($state, $rootScope, $log, FirebaseService) {
+  function registerController($state, $log, UserService) {
     const vm = this;
 
     vm.data = {
@@ -24,32 +24,25 @@
       $log.debug(vm.data);
 
       if (!vm.data.email) {
-        $log.error(`missing email`);
+        $log.error('missing email');
 
       } else if (!vm.data.password) {
-        $log.error(`missing password`);
+        $log.error('missing password');
 
       } else if (vm.data.email !== vm.data.confirmEmail) {
-        $log.error(`email don't match`);
+        $log.error('email don\'t match');
 
       } else if (vm.data.password !== vm.data.confirmPassword) {
-        $log.error(`password don't match`);
+        $log.error('password don\'t match');
 
       } else {
-        FirebaseService.auth.$createUser({
-          email: vm.data.email,
-          password: vm.data.password
-        }).then((user) => {
-          $log.debug(`Logged in as: ${user.uid}`);
-
-          return FirebaseService.auth.$authWithPassword({
-            email: vm.data.email,
-            password: vm.data.password
+        UserService.createUser(vm.data)
+          .then(() => {
+            $state.go('app.dashboard');
+          })
+          .catch((error) => {
+            $log.error(`Error: ${error}`);
           });
-        })
-        .catch((error) => {
-          $log.error(`Error: ${error}`);
-        });
       }
     }
   }

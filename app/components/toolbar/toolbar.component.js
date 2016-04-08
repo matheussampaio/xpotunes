@@ -7,7 +7,7 @@
       templateUrl: 'toolbar/toolbar.html'
     });
 
-  function toolbarController($state, $log, UserService, FirebaseService) {
+  function toolbarController($state, $log, UserService) {
     const vm = this;
 
     vm.user = UserService;
@@ -17,8 +17,7 @@
     ////////////////
 
     function logout() {
-      $log.debug('logout');
-      FirebaseService.auth.$unauth();
+      UserService.logout();
       $state.go('app.home');
     }
   }

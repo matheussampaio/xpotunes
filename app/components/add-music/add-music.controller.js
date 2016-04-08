@@ -11,9 +11,10 @@
       title: ''
     };
 
-    vm.cancel = $mdDialog.cancel;
-    vm.uploader = createFileUploader();
     vm.addMusic = addMusic;
+    vm.cancel = $mdDialog.cancel;
+    vm.cancelUpload = cancelUpload;
+    vm.uploader = createFileUploader();
 
     ////////////////
 
@@ -70,6 +71,11 @@
 
     function _success(music) {
       $mdDialog.hide(music);
+    }
+
+    function cancelUpload() {
+      vm.uploader.cancelAll();
+      $mdDialog.hide();
     }
 
   }

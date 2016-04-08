@@ -4,17 +4,13 @@
     .module('xpotunes')
     .component('dashboard', {
       controller: dashboardController,
-      templateUrl: 'dashboard/dashboard.html',
-      bindings: {
-        user: '='
-      }
+      templateUrl: 'dashboard/dashboard.html'
     });
 
   function dashboardController($mdDialog, $mdEditDialog, MusicService) {
     const vm = this;
 
     vm.selected = [];
-    vm.musics = [];
 
     vm.query = {
       order: 'views'

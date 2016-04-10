@@ -4,13 +4,14 @@
     .module('xpotunes')
     .service('UserService', UserService);
 
-  function UserService($log, $rootScope, FirebaseService) {
+  function UserService($log, FirebaseService) {
     const service = {
       data: getUser(),
       getUser,
       login,
       logout,
-      createUser
+      createUser,
+      isLoggedIn
     };
 
     activate();
@@ -52,6 +53,10 @@
 
         return login({ email, password });
       });
+    }
+
+    function isLoggedIn() {
+      return FirebaseService.auth.$getAuth() !== null;
     }
 
   }

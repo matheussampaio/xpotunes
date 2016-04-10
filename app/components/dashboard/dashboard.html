@@ -48,14 +48,18 @@
         <thead md-head md-order="$ctrl.query.order">
           <tr md-row>
             <th md-column md-order-by="title"><span>Title</span></th>
+            <th md-column md-order-by="album"><span>Album</span></th>
+            <th md-column md-order-by="author"><span>Author</span></th>
             <th md-column md-numeric md-order-by="views"><span>Views</span></th>
             <th md-column md-numeric md-order-by="likes">Likes</th>
             <th md-column md-numeric md-order-by="dislikes">Dislikes</th>
           </tr>
         </thead>
         <tbody md-body>
-          <tr md-row md-select="music" md-select-id="_id" ng-repeat="music in $ctrl.musics | filter:{title: $ctrl.query.filter} | orderBy: $ctrl.query.order">
+          <tr md-row md-select="music" md-select-id="_id" ng-repeat="music in $ctrl.musics | filter:{ title: $ctrl.query.filter } | orderBy: $ctrl.query.order">
             <td md-cell ng-click="$ctrl.editComment($event, music)">{{music.title}}</td>
+            <td md-cell>{{music.album}}</td>
+            <td md-cell>{{music.author}}</td>
             <td md-cell>{{music.views | number: 0}}</td>
             <td md-cell>{{music.likes.length | number: 0}}</td>
             <td md-cell>{{music.dislikes.length | number: 0}}</td>
@@ -65,13 +69,5 @@
     </md-table-container>
 
   </md-card>
-
-  <!-- <md-card ng-hide="$ctrl.musics.length" layout-align="center center">
-    <md-card-content layout="column" layout-align="center center">
-      <h3>You don't have any music, yet.</h3>
-
-      <md-button class="md-raised md-primary" flex='20' ng-click="$ctrl.addMusic($event)">upload</md-button>
-    </md-card-content>
-  </md-card> -->
 
 </md-content>

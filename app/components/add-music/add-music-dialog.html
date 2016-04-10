@@ -1,25 +1,47 @@
-<md-dialog nv-file-drop uploader="$ctrl.uploader">
+<md-dialog flex='30' nv-file-drop uploader="$ctrl.uploader">
   <md-dialog-content class="md-dialog-content">
 
     <h2 class="md-title">Upload Music</h2>
 
     <md-progress-linear ng-show="$ctrl.uploader.isUploading" md-mode="determinate" ng-value="$ctrl.uploader.progress"></md-progress-linear>
 
-    <p ng-if="$ctrl.invalid" class="upload-warn" layout="row" layout-align="start center">
-      <i class="material-icons">error_outline</i>
-      <span>&nbsp; This file is too big.</span>
-    </p>
-
     <form name="$ctrl.item.form" ng-submit="$ctrl.addMusic()">
       <div layout="column" class="input-row">
-        <md-input-container flex>
+        <md-input-container>
           <label>Title</label>
           <input name="title" ng-model="$ctrl.music.title" md-maxlength="30" ng-disabled="$ctrl.uploader.isUploading" required>
+          <div ng-messages="$ctrl.item.form.title.$error">
+            <div ng-message="required">This is required!</div>
+          </div>
         </md-input-container>
 
-        <md-input-container flex>
+        <md-input-container>
+          <label>Album</label>
+          <input name="album" ng-model="$ctrl.music.album" md-maxlength="30" ng-disabled="$ctrl.uploader.isUploading" required>
+          <div ng-messages="$ctrl.item.form.album.$error">
+            <div ng-message="required">This is required!</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container>
+          <label>Author</label>
+          <input name="author" ng-model="$ctrl.music.author" md-maxlength="30" ng-disabled="$ctrl.uploader.isUploading" required>
+          <div ng-messages="$ctrl.item.form.album.$error">
+            <div ng-message="required">This is required!</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container>
           <label>File</label>
-          <input name="file" ng-model="$ctrl.uploader.queue[0].file.name" disabled required>
+          <input id="fileInput" name="file" ng-model="$ctrl.uploader.queue[0].file.name" disabled required>
+          <div ng-show="$ctrl.invalid" ng-messages role="alert">
+            <ng-message ng-show="$ctrl.invalid.extension">
+              The file must be 'mp3' or 'wav'.
+            </ng-message>
+            <ng-message ng-show="$ctrl.invalid.size">
+              This file is too big.
+            </ng-message>
+          </div>
         </md-input-container>
 
         <label ng-hide="$ctrl.uploader.queue.length" for="input-file" class="md-button md-raised">Select File</label>

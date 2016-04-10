@@ -4,11 +4,11 @@
     .run(xpotunesRun)
     .config(xpotunesConfig);
 
-  function xpotunesRun($rootScope, $state) {
+  function xpotunesRun($rootScope, $state, UserService) {
     $rootScope.$on('$stateChangeStart', (event, toState, toParams) => {
-      if (toState.auth && !$rootScope.user) {
+      if (toState.name === 'app.dashboard' && !UserService.isLoggedIn()) {
         event.preventDefault();
-        $state.go('app.login');
+        $state.go('app.home');
       }
     });
   }
@@ -48,7 +48,7 @@
         .state('app.register', registerState);
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/dashboard');
   }
 
 })();

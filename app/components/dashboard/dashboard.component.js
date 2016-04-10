@@ -84,7 +84,6 @@
           'md-maxlength': 30
         }
       });
-
     }
 
     function _save(music) {

@@ -7,6 +7,11 @@
   function addMusicController($mdDialog, $mdToast, FileUploader, UserService) {
     const vm = this;
 
+    vm.invalid = {
+      size: false,
+      extension: false
+    };
+
     vm.music = {
       title: ''
     };
@@ -32,22 +37,37 @@
     function createFileUploader() {
       return new FileUploader({
         url: '/api/music',
-        filters: [{
-          name: 'sizeToBig',
-          // A user-defined filter
-          fn: (item) => item.size < 1000 * 1000 * 20 // 20mb
-        }],
+        filters: [
+          {
+            name: 'isAudioFile',
+            fn: (item) => {
+              const ext = item.type.slice(item.type.lastIndexOf('/') + 1);
+              const type = `|${ext}|`;
+              return '|mp3|wav|'.indexOf(type) !== -1;
+            }
+          },
+          {
+            name: 'sizeToBig',
+            // A user-defined filter
+            fn: (item) => item.size < 1000 * 1000 * 20 // 20mb
+          }
+        ],
         onWhenAddingFileFailed: (file, filter) => {
           if (filter.name === 'sizeToBig') {
-            vm.invalid = true;
+            vm.invalid.size = true;
+          } else if (filter.name === 'isAudioFile') {
+            // angular.element('#fileInput').$setValidity('extension', true);
+            vm.invalid.extension = true;
           }
         },
         onAfterAddingFile: () => {
-          vm.invalid = false;
+          vm.invalid = {};
         },
         onBeforeUploadItem: (item) => {
           item.formData.push({
             title: vm.music.title,
+            album: vm.music.album,
+            author: vm.music.author,
             name: item.file.name,
             user: UserService.data.uid,
             size: item.file.size

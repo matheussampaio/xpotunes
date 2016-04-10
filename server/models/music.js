@@ -1,11 +1,23 @@
 const Busboy = require('busboy');
 const restful = require('node-restful');
+const random = require('mongoose-random');
+
 const AudioData = require('./audio-data');
 
 const mongoose = restful.mongoose;
 
-const Music = restful.model('music', new restful.mongoose.Schema({
+const MusicSchema = new mongoose.Schema({
   title: {
+    type: String,
+    trim: true,
+    required: true
+  },
+  album: {
+    type: String,
+    trim: true,
+    required: true
+  },
+  author: {
     type: String,
     trim: true,
     required: true
@@ -32,16 +44,30 @@ const Music = restful.model('music', new restful.mongoose.Schema({
     type: Number,
     default: 0
   },
-  likes: [{
-    type: String
-  }],
-  dislikes: [{
-    type: String
-  }]
-}))
-.methods(['get', 'put', 'delete']);
+  likes: {
+    type: Number,
+    default: 0
+  },
+  dislikes: {
+    type: Number,
+    default: 0
+  }
+})
+.plugin(random);
 
-Music.route('post', (req, res) => {
+const MusicModel = restful.model('music', MusicSchema)
+  .methods(['get', 'put', 'delete'])
+  .route('post', musicPost)
+  .route('like.post', { detail: true, handler: likePost })
+  .route('dislike.post', { detail: true, handler: dislikePost })
+  .route('view.post', { detail: true, handler: viewPost })
+  .route('random.get', randomGet);
+
+MusicModel.syncRandom((err, result) => {
+  console.log(result.updated);
+});
+
+function musicPost(req, res) {
   const busboy = new Busboy({
     headers: req.headers,
     limits: {
@@ -49,7 +75,7 @@ Music.route('post', (req, res) => {
     }
   });
 
-  const music = new Music();
+  const music = new MusicModel();
 
   const fileBuffer = [];
 
@@ -96,80 +122,87 @@ Music.route('post', (req, res) => {
   });
 
   req.pipe(busboy);
-});
+}
 
-Music.route('like.post', {
-  detail: true,
-  handler: (req, res) => {
-    let updateMusic = {};
-
-    // add like and remove dislikes
-    if (req.body.like) {
-      updateMusic = {
-        $addToSet: {
-          likes: req.body.user
-        },
-        $pull: {
-          dislikes: req.body.user
-        }
-      };
-
-    // add dislikes and remove from likes
-    } else if (req.body.dislike) {
-      updateMusic = {
-        $pull: {
-          likes: req.body.user
-        },
-        $addToSet: {
-          dislikes: req.body.user
-        }
-      };
-
-    // remove both likes and dislikes
-    } else {
-      updateMusic = {
-        $pull: {
-          likes: req.body.user,
-          dislikes: req.body.user
-        }
-      };
+function likePost(req, res) {
+  const update = {
+    $inc: {
+      likes: 1
     }
+  };
 
-    const options = {
-      new: true
-    };
+  const options = {
+    new: true
+  };
 
-    Music.findByIdAndUpdate(req.params.id, updateMusic, options, (err, music) => {
-      if (!err) {
-        res.send(music);
+  MusicModel.findByIdAndUpdate(req.params.id, update, options, (err, music) => {
+    if (!err) {
+      res.send(music);
+    } else {
+      res.send(err);
+    }
+  });
+}
+
+function dislikePost(req, res) {
+  const update = {
+    $inc: {
+      dislikes: 1
+    }
+  };
+
+  const options = {
+    new: true
+  };
+
+  MusicModel.findByIdAndUpdate(req.params.id, update, options, (err, music) => {
+    if (!err) {
+      res.send(music);
+    } else {
+      res.send(err);
+    }
+  });
+}
+
+function viewPost(req, res) {
+  const update = {
+    $inc: {
+      views: 1
+    }
+  };
+
+  const options = {
+    new: true
+  };
+
+  MusicModel.findByIdAndUpdate(req.params.id, update, options, (err, music) => {
+    if (!err) {
+      res.send(music);
+    } else {
+      res.send(err);
+    }
+  });
+}
+
+function randomGet(req, res) {
+  let limit = parseInt(req.query.limit, 10);
+
+  if (isNaN(limit)) {
+    limit = 1;
+  }
+
+
+  MusicModel
+    .findRandom()
+    .limit(limit)
+    .select('-random')
+    .exec((err, music) => {
+      if (music) {
+        res.status(200).send(music);
       } else {
-        res.send(err);
+        res.send(500).send({ error: 'Something went wrong when geting a random music.' });
       }
     });
-  }
-});
+}
 
-Music.route('view.post', {
-  detail: true,
-  handler: (req, res) => {
-    const update = {
-      $inc: {
-        views: 1
-      }
-    };
-
-    const options = {
-      new: true
-    };
-
-    Music.findByIdAndUpdate(req.params.id, update, options, (err, music) => {
-      if (!err) {
-        res.send(music);
-      } else {
-        res.send(err);
-      }
-    });
-  }
-});
-
-module.exports = Music;
+module.exports = MusicModel;

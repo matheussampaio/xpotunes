@@ -22,7 +22,7 @@ const MusicSchema = new mongoose.Schema({
     trim: true,
     required: true
   },
-  name: {
+  filename: {
     type: String,
     trim: true,
     required: true

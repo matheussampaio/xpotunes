@@ -68,7 +68,7 @@
             title: vm.music.title,
             album: vm.music.album,
             author: vm.music.author,
-            name: item.file.name,
+            filename: item.file.name,
             user: UserService.data.uid,
             size: item.file.size
           });

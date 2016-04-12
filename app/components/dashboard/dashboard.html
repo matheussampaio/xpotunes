@@ -47,28 +47,37 @@
       <table md-table md-row-select multiple ng-model="$ctrl.selected" md-progress="$ctrl.promise">
         <thead md-head md-order="$ctrl.query.order">
           <tr md-row>
-            <th md-column><span>Play</span></th>
             <th md-column md-order-by="title"><span>Title</span></th>
             <th md-column md-order-by="album"><span>Album</span></th>
             <th md-column md-order-by="author"><span>Author</span></th>
+            <th md-column md-order-by="genre"><span>Genre</span></th>
+            <th md-column><span>Description</span></th>
             <th md-column md-numeric md-order-by="views"><span>Views</span></th>
             <th md-column md-numeric md-order-by="likes">Likes</th>
             <th md-column md-numeric md-order-by="dislikes">Dislikes</th>
+            <th md-column><span>Play</span></th>
           </tr>
         </thead>
         <tbody md-body>
           <tr md-row md-select="music" md-select-id="_id" ng-repeat="music in $ctrl.musics | filter:{ title: $ctrl.query.filter } | orderBy: $ctrl.query.order">
-            <td md-cell>
+            <td md-cell ng-click="$ctrl.editComment($event, music)">{{music.title}}</td>
+            <td md-cell>{{music.album}}</td>
+            <td md-cell>{{music.author}}</td>
+            <td md-cell>{{music.genre}}</td>
+            <td md-cell>{{music.description}}</td>
+            <td md-cell>{{music.views | number: 0}}</td>
+            <td md-cell>{{music.likes | number: 0}}</td>
+            <td md-cell>{{music.dislikes | number: 0}}</td>
+            <td md-cell ng-if="music.load">
               <audio controls>
                 <source ng-src="{{$ctrl.getStreamMusic(music)}}" type="audio/mpeg">
               </audio>
             </td>
-            <td md-cell ng-click="$ctrl.editComment($event, music)">{{music.title}}</td>
-            <td md-cell>{{music.album}}</td>
-            <td md-cell>{{music.author}}</td>
-            <td md-cell>{{music.views | number: 0}}</td>
-            <td md-cell>{{music.likes | number: 0}}</td>
-            <td md-cell>{{music.dislikes | number: 0}}</td>
+            <td md-cell ng-if="!music.load">
+              <md-button ng-click="music.load = true">
+                <md-icon>play_arrow</md-icon>
+              </md-button>
+            </td>
           </tr>
         </tbody>
       </table>

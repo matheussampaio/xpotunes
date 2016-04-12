@@ -1,4 +1,4 @@
-<md-dialog flex='30' nv-file-drop uploader="$ctrl.uploader">
+<md-dialog nv-file-drop uploader="$ctrl.uploader">
   <md-dialog-content class="md-dialog-content">
 
     <h2 class="md-title">Upload Music</h2>
@@ -7,29 +7,55 @@
 
     <form name="$ctrl.item.form" ng-submit="$ctrl.addMusic()">
       <div layout="column" class="input-row">
-        <md-input-container>
-          <label>Title</label>
-          <input name="title" ng-model="$ctrl.music.title" md-maxlength="30" ng-disabled="$ctrl.uploader.isUploading" required>
-          <div ng-messages="$ctrl.item.form.title.$error">
-            <div ng-message="required">This is required!</div>
-          </div>
-        </md-input-container>
+
+        <div layout="row" class="input-row">
+          <md-input-container>
+            <label>Title</label>
+            <input name="title" ng-model="$ctrl.music.title" md-maxlength="30" ng-disabled="$ctrl.uploader.isUploading" required>
+            <div ng-messages="$ctrl.item.form.title.$error">
+              <div ng-message="required">This is required!</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container>
+            <label>Album</label>
+            <input name="album" ng-model="$ctrl.music.album" md-maxlength="30" ng-disabled="$ctrl.uploader.isUploading" required>
+            <div ng-messages="$ctrl.item.form.album.$error">
+              <div ng-message="required">This is required!</div>
+            </div>
+          </md-input-container>
+        </div>
+
+        <div layout="row" class="input-row">
+          <md-input-container>
+            <label>Author</label>
+            <input name="author" ng-model="$ctrl.music.author" md-maxlength="30" ng-disabled="$ctrl.uploader.isUploading" required>
+            <div ng-messages="$ctrl.item.form.album.$error">
+              <div ng-message="required">This is required!</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container>
+            <label>Genre</label>
+            <input name="genre" ng-model="$ctrl.music.genre" md-maxlength="30" ng-disabled="$ctrl.uploader.isUploading" required>
+            <div ng-messages="$ctrl.item.form.album.$error">
+              <div ng-message="required">This is required!</div>
+            </div>
+          </md-input-container>
+        </div>
 
         <md-input-container>
-          <label>Album</label>
-          <input name="album" ng-model="$ctrl.music.album" md-maxlength="30" ng-disabled="$ctrl.uploader.isUploading" required>
+          <label>Description</label>
+          <textarea rows="4" name="description" ng-model="$ctrl.music.description" md-maxlength="120" ng-disabled="$ctrl.uploader.isUploading" required>
+          </textarea>
           <div ng-messages="$ctrl.item.form.album.$error">
             <div ng-message="required">This is required!</div>
           </div>
         </md-input-container>
 
-        <md-input-container>
-          <label>Author</label>
-          <input name="author" ng-model="$ctrl.music.author" md-maxlength="30" ng-disabled="$ctrl.uploader.isUploading" required>
-          <div ng-messages="$ctrl.item.form.album.$error">
-            <div ng-message="required">This is required!</div>
-          </div>
-        </md-input-container>
+        <label ng-hide="$ctrl.uploader.queue.length" for="input-file" class="md-button md-raised">Select File</label>
+        <label ng-show="$ctrl.uploader.queue.length && !$ctrl.uploader.isUploading" for="input-file" class="md-button md-raised">Change File</label>
+        <input id="input-file" ng-hide="true" accept="audio/*" type="file" nv-file-select uploader="$ctrl.uploader"/>
 
         <md-input-container>
           <label>File</label>
@@ -44,9 +70,6 @@
           </div>
         </md-input-container>
 
-        <label ng-hide="$ctrl.uploader.queue.length" for="input-file" class="md-button md-raised">Select File</label>
-        <label ng-show="$ctrl.uploader.queue.length && !$ctrl.uploader.isUploading" for="input-file" class="md-button md-raised">Change File</label>
-        <input id="input-file" ng-hide="true" accept="audio/*" type="file" nv-file-select uploader="$ctrl.uploader"/>
       </div>
     </form>
 

@@ -68,6 +68,8 @@
             title: vm.music.title,
             album: vm.music.album,
             author: vm.music.author,
+            genre: vm.music.genre,
+            description: vm.music.description,
             filename: item.file.name,
             user: UserService.data.uid,
             size: item.file.size

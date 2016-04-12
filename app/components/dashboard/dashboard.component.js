@@ -21,6 +21,7 @@
     vm.editComment = editComment;
     vm.deleteMusic = deleteMusic;
     vm.addMusic = addMusic;
+    vm.getStreamMusic = getStreamMusic;
     vm.promise = null;
 
     activate();
@@ -35,6 +36,10 @@
       vm.musics = musics;
     }
 
+    function getStreamMusic(music) {
+      const url = `api/audiodata/${music.file}/stream`;
+      return url;
+    }
     function getMusics() {
       vm.selected = [];
       vm.promise = MusicService.get(_onSuccess);

@@ -46,7 +46,7 @@
 
         <div layout="row" class="input-row">
           <md-input-container>
-            <label>Start Time</label>
+            <label>Start Time (Seconds)</label>
             <input name="start" type="number" ng-model="$ctrl.music.start" ng-disabled="$ctrl.uploader.isUploading" required>
             <div ng-messages="$ctrl.item.form.start.$error">
               <div ng-message="required">This is required!</div>
@@ -54,7 +54,7 @@
           </md-input-container>
 
           <md-input-container>
-            <label>End time</label>
+            <label>End time (Seconds)</label>
             <input name="end" type="number" ng-model="$ctrl.music.end" ng-disabled="$ctrl.uploader.isUploading" required>
             <div ng-messages="$ctrl.item.form.end.$error">
               <div ng-message="required">This is required!</div>

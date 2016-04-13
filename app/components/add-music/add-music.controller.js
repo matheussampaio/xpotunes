@@ -70,7 +70,7 @@
             artist: vm.music.artist,
             genre: vm.music.genre,
             start: vm.music.start * 1000,
-            end: (vm.music.end - vm.music.start) * 1000,
+            end: vm.music.end * 1000,
             description: vm.music.description,
             filename: item.file.name,
             user: UserService.data.uid,

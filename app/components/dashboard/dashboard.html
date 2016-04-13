@@ -52,6 +52,7 @@
             <th md-column md-order-by="artist"><span>Artist</span></th>
             <th md-column md-order-by="genre"><span>Genre</span></th>
             <th md-column><span>Description</span></th>
+            <th md-column md-numeric md-order-by="trailers"><span>Trailers</span></th>
             <th md-column md-numeric md-order-by="views"><span>Views</span></th>
             <th md-column md-numeric md-order-by="likes">Likes</th>
             <th md-column md-numeric md-order-by="dislikes">Dislikes</th>
@@ -65,6 +66,7 @@
             <td md-cell>{{music.artist}}</td>
             <td md-cell>{{music.genre}}</td>
             <td md-cell>{{music.description}}</td>
+            <td md-cell>{{music.trailers | number: 0}}</td>
             <td md-cell>{{music.views | number: 0}}</td>
             <td md-cell>{{music.likes | number: 0}}</td>
             <td md-cell>{{music.dislikes | number: 0}}</td>

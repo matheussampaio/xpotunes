@@ -58,6 +58,10 @@ const MusicSchema = new mongoose.Schema({
     ref: 'audiodata',
     required: true
   },
+  trailers: {
+    type: Number,
+    default: 0
+  },
   views: {
     type: Number,
     default: 0
@@ -79,6 +83,7 @@ const MusicModel = restful.model('music', MusicSchema)
   .route('like.post', { detail: true, handler: likePost })
   .route('dislike.post', { detail: true, handler: dislikePost })
   .route('view.post', { detail: true, handler: viewPost })
+  .route('trailer.post', { detail: true, handler: trailerPost })
   .route('random.get', randomGet);
 
 MusicModel.syncRandom(() => {});
@@ -184,6 +189,26 @@ function viewPost(req, res) {
   const update = {
     $inc: {
       views: 1
+    }
+  };
+
+  const options = {
+    new: true
+  };
+
+  MusicModel.findByIdAndUpdate(req.params.id, update, options, (err, music) => {
+    if (!err) {
+      res.send(music);
+    } else {
+      res.send(err);
+    }
+  });
+}
+
+function trailerPost(req, res) {
+  const update = {
+    $inc: {
+      trailers: 1
     }
   };
 

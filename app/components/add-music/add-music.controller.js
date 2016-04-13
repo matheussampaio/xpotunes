@@ -85,7 +85,8 @@
           }
         },
         onErrorItem: (fileItem, response, status, headers) => {
-          console.error('error: ', response);
+          console.error('error')
+          console.error(response);
           console.info('fileItem: ', fileItem);
         }
       });

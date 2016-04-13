@@ -201,18 +201,22 @@ function randomGet(req, res) {
     limit = 1;
   }
 
+  let filter = {};
 
-  MusicModel
-    .findRandom()
-    .limit(limit)
-    .select('-random')
-    .exec((err, music) => {
-      if (music) {
-        res.status(200).send(music);
-      } else {
-        res.send(500).send({ error: 'Something went wrong when geting a random music.' });
-      }
-    });
+  if (req.query.genre) {
+    filter = { genre: { $in: req.query.genre.split(',') } };
+  }
+
+  const options = { limit };
+
+  MusicModel.findRandom(filter, {}, options, (err, music) => {
+    if (music) {
+      res.status(200).send(music);
+    } else {
+      res.send(500).send({ error: 'Something went wrong when geting a random music.' });
+    }
+  });
+
 }
 
 module.exports = MusicModel;

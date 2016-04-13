@@ -28,21 +28,23 @@ AudioData.route('stream.get', {
 
       res.set({
         'Accept-Ranges': 'bytes',
-        // 'Content-Range': `bytes ${start}-${end}/${audio.file.size}`,
-        'Content-Type': 'audio/mpeg3',
-        'Content-Length': end - start + 1
+        'Content-Range': `bytes ${start}-${end}/${audio.file.length}`,
+        'Content-Length': end - start + 1,
+        'Content-Type': 'audio/mpeg'
       });
+
+      if (start !== 0 || end !== audio.file.length - 1) {
+        res.status(206);
+      }
 
       const myReadableStreamBuffer = new streamBuffers.ReadableStreamBuffer({
         frequency: 10,   // in milliseconds.
         chunkSize: 2048  // in bytes.
       });
 
-      myReadableStreamBuffer.put(audio.file);
+      myReadableStreamBuffer.put(audio.file.slice(start, end + 1));
 
       return myReadableStreamBuffer.pipe(res);
-
-      // return res.send(200, audio.file);
     });
   }
 });
@@ -58,7 +60,7 @@ function getStartEnd(audio, headers) {
     const partialend = parts[1];
 
     start = parseInt(partialstart, 10);
-    end = partialend ? parseInt(partialend, 10) : end;
+    end = partialend ? parseInt(partialend, 10) - 1 : end;
   }
 
   return { start, end };

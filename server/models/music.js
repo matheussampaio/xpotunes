@@ -41,6 +41,14 @@ const MusicSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  start: {
+    type: Number,
+    required: true
+  },
+  end: {
+    type: Number,
+    required: true
+  },
   user: {
     type: String,
     required: true
@@ -73,9 +81,7 @@ const MusicModel = restful.model('music', MusicSchema)
   .route('view.post', { detail: true, handler: viewPost })
   .route('random.get', randomGet);
 
-MusicModel.syncRandom((err, result) => {
-  console.log(result.updated);
-});
+MusicModel.syncRandom(() => {});
 
 function musicPost(req, res) {
   const busboy = new Busboy({

@@ -30,7 +30,7 @@
           <md-input-container>
             <label>Artist</label>
             <input name="artist" ng-model="$ctrl.music.artist" md-maxlength="30" ng-disabled="$ctrl.uploader.isUploading" required>
-            <div ng-messages="$ctrl.item.form.album.$error">
+            <div ng-messages="$ctrl.item.form.artist.$error">
               <div ng-message="required">This is required!</div>
             </div>
           </md-input-container>
@@ -38,7 +38,25 @@
           <md-input-container>
             <label>Genre</label>
             <input name="genre" ng-model="$ctrl.music.genre" md-maxlength="30" ng-disabled="$ctrl.uploader.isUploading" required>
-            <div ng-messages="$ctrl.item.form.album.$error">
+            <div ng-messages="$ctrl.item.form.genre.$error">
+              <div ng-message="required">This is required!</div>
+            </div>
+          </md-input-container>
+        </div>
+
+        <div layout="row" class="input-row">
+          <md-input-container>
+            <label>Start Time</label>
+            <input name="start" type="number" ng-model="$ctrl.music.start" ng-disabled="$ctrl.uploader.isUploading" required>
+            <div ng-messages="$ctrl.item.form.start.$error">
+              <div ng-message="required">This is required!</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container>
+            <label>End time</label>
+            <input name="end" type="number" ng-model="$ctrl.music.end" ng-disabled="$ctrl.uploader.isUploading" required>
+            <div ng-messages="$ctrl.item.form.end.$error">
               <div ng-message="required">This is required!</div>
             </div>
           </md-input-container>
@@ -48,14 +66,14 @@
           <label>Description</label>
           <textarea rows="4" name="description" ng-model="$ctrl.music.description" md-maxlength="120" ng-disabled="$ctrl.uploader.isUploading" required>
           </textarea>
-          <div ng-messages="$ctrl.item.form.album.$error">
+          <div ng-messages="$ctrl.item.form.description.$error">
             <div ng-message="required">This is required!</div>
           </div>
         </md-input-container>
 
         <label ng-hide="$ctrl.uploader.queue.length" for="input-file" class="md-button md-raised">Select File</label>
         <label ng-show="$ctrl.uploader.queue.length && !$ctrl.uploader.isUploading" for="input-file" class="md-button md-raised">Change File</label>
-        <input id="input-file" ng-hide="true" accept="audio/*" type="file" nv-file-select uploader="$ctrl.uploader"/>
+        <input id="input-file" ng-hide="true" accept="audio/mpeg" type="file" nv-file-select uploader="$ctrl.uploader"/>
 
         <md-input-container>
           <label>File</label>

@@ -49,7 +49,7 @@
           <tr md-row>
             <th md-column md-order-by="title"><span>Title</span></th>
             <th md-column md-order-by="album"><span>Album</span></th>
-            <th md-column md-order-by="author"><span>Author</span></th>
+            <th md-column md-order-by="artist"><span>Artist</span></th>
             <th md-column md-order-by="genre"><span>Genre</span></th>
             <th md-column><span>Description</span></th>
             <th md-column md-numeric md-order-by="views"><span>Views</span></th>
@@ -62,7 +62,7 @@
           <tr md-row md-select="music" md-select-id="_id" ng-repeat="music in $ctrl.musics | filter:{ title: $ctrl.query.filter } | orderBy: $ctrl.query.order">
             <td md-cell ng-click="$ctrl.editComment($event, music)">{{music.title}}</td>
             <td md-cell>{{music.album}}</td>
-            <td md-cell>{{music.author}}</td>
+            <td md-cell>{{music.artist}}</td>
             <td md-cell>{{music.genre}}</td>
             <td md-cell>{{music.description}}</td>
             <td md-cell>{{music.views | number: 0}}</td>

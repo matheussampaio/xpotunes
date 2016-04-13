@@ -17,7 +17,7 @@ const MusicSchema = new mongoose.Schema({
     trim: true,
     required: true
   },
-  author: {
+  artist: {
     type: String,
     trim: true,
     required: true

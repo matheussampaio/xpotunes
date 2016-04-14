@@ -37,7 +37,11 @@
 
           <md-input-container>
             <label>Genre</label>
-            <input name="genre" ng-model="$ctrl.music.genre" md-maxlength="30" ng-disabled="$ctrl.uploader.isUploading" required>
+            <md-select ng-model="$ctrl.music.genre" required>
+              <md-option ng-repeat="genre in $ctrl.genres" value="{{genre}}">
+                {{genre}}
+              </md-option>
+            </md-select>
             <div ng-messages="$ctrl.item.form.genre.$error">
               <div ng-message="required">This is required!</div>
             </div>

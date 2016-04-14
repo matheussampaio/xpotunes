@@ -16,6 +16,13 @@
       title: ''
     };
 
+    vm.genres = [
+      'Blues', 'Classical', 'Comedy', 'Country', 'Electric', 'Holiday', 'Opera',
+      'Jazz', 'Alternative', 'Latino', 'Hindi', 'Pop', 'R&B', 'Dance', 'Hip-Hop',
+      'Rap', 'World', 'Rock', 'Christian', 'Vocal', 'Swing', 'Brazilian', 'Folk',
+      'Spoken Word', 'Metal', 'Punk', 'Funk', 'Techno', '420 Blaze It'
+    ];
+
     vm.addMusic = addMusic;
     vm.cancel = $mdDialog.cancel;
     vm.cancelUpload = cancelUpload;
